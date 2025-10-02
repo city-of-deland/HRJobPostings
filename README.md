@@ -46,5 +46,3 @@ The template ensures City of DeLand’s HR job postings maintain a professional 
 ## 🔹 Maintenance Notes
 - Update images and video assets through the City’s CDN.
 - Test formatting in ApplicantStack before going live.
-
----
