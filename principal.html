@@ -1,0 +1,395 @@
+<style>
+    /* =====================  DESIGN TOKENS (scoped)  ===================== */
+    .job-listing{
+    --brand: #0b3c88;
+    --brand-2: #f4b400; 
+    --brand-3: #40c41c;
+    --ink: #0f172a;
+    --ink-2:#334155;
+    --bg:  #ffffff;
+    --bg-alt:#f8fafc;
+    --card:#ffffff;
+    --muted:#64748b;
+    --ring:#cbd5e1;
+    --maxw: 1120px;
+    --radius: 16px;
+    --gap: clamp(16px, 3vw, 24px);
+    --pad: clamp(16px, 4vw, 32px);
+    --shadow: 0 10px 18px rgba(2,8,23,.08);
+    }
+
+    /* =====================  RESET (scoped + defensive)  ===================== */
+    .job-listing, .job-listing *,:before,:after{ box-sizing:border-box !important; }
+    .job-listing{
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif !important;
+    color: var(--ink) !important;
+    background: var(--bg) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.55 !important;
+    }
+    .job-listing img{ max-width:100% !important; height:auto !important; display:block !important; }
+    .job-listing h1,.job-listing h2,.job-listing h3{
+    line-height:1.15 !important; margin:0 0 .6em !important; font-weight:700 !important;
+    }
+    .job-listing p{ margin:.6em 0 !important; }
+    .job-listing ul{ margin:.4em 0 .8em 1.25em !important; padding:0 !important; }
+    .job-listing li{ margin:.25em 0 !important; }
+    .job-listing a{ color: var(--brand) !important; text-decoration: none !important; }
+    .job-listing a:hover{ text-decoration: underline !important; }
+
+    /* =====================  LAYOUT HELPERS  ===================== */
+    .job-listing .container{
+    width: min(100% - calc(2 * var(--pad)), var(--maxw)) !important;
+    margin-inline: auto !important;
+    }
+    .job-listing .section{ padding: 30px 0 !important; }
+    .job-listing .grid{
+    display:grid !important;
+    gap: var(--gap) !important;
+    grid-template-columns: 1fr !important;
+    }
+    @media (min-width: 768px){
+    .job-listing .grid.cols-2{ grid-template-columns: 1fr 1fr !important; }
+    .job-listing .grid.cols-3{ grid-template-columns: repeat(3,1fr) !important; }
+    }
+
+    /* =====================  COMPONENTS  ===================== */
+    .job-listing .badge{
+    display:inline-block !important;
+    font-weight: 700 !important;
+    letter-spacing:.02em !important;
+    text-transform: uppercase !important;
+    font-size: .78rem !important;
+    padding:.4rem .6rem !important;
+    border-radius: 999px !important;
+    background: var(--brand-3) !important;
+    color: white !important;
+    }
+    .job-listing .card{
+    background: var(--card) !important;
+    border: 1px solid var(--ring) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow) !important;
+    padding: clamp(16px, 3vw, 24px) !important;
+    }
+    .job-listing .lead{
+    font-size: clamp(1.05rem, 2.2vw, 1.15rem) !important;
+    color: var(--ink-2) !important;
+    }
+    .job-listing .kicker{
+    color: var(--muted) !important;
+    font-weight:600 !important;
+    text-transform:uppercase !important;
+    letter-spacing:.06em !important;
+    font-size:.85rem !important;
+    margin-bottom:.25rem !important;
+    }
+    .job-listing .btn{
+    display:inline-block !important;
+    border-radius: 12px !important;
+    padding:.75rem 1rem !important;
+    font-weight:700 !important;
+    border:1px solid var(--brand) !important;
+    color:white !important;
+    background: var(--brand) !important;
+    text-decoration: none !important;
+    }
+    .job-listing .btn.alt{ background: transparent !important; color: var(--brand) !important; }
+
+    /* =====================  HERO  ===================== */
+    .job-listing .hero{
+    position: relative !important; color: white !important; overflow:hidden !important;
+    background: linear-gradient( to bottom right, rgba(11,60,136,.70), rgba(2,8,23,.55) ),
+    url('https://services.deland.org/cdn/hr/job-listings/hero/deland-city-hall.jpg') center/cover no-repeat !important;
+    }
+    .job-listing .hero .inner{ padding: clamp(56px, 10vw, 120px) 0 !important; }
+    .job-listing .hero h1{ font-size: clamp(2rem, 5.6vw, 3.25rem) !important; margin:.25em 0 !important; }
+    .job-listing .hero .subtitle{ font-size: clamp(1rem, 2.6vw, 1.25rem) !important; opacity:.95 !important; }
+
+    /* =====================  TYPOGRAPHY UTILS  ===================== */
+    .job-listing .h2{ font-size: clamp(1.4rem, 3.8vw, 2.1rem) !important; margin-bottom:.4em !important; }
+    .job-listing .h3{ font-size: clamp(1.0rem, 2.6vw, 1.35rem) !important; margin:.4em 0 !important; }
+    .job-listing .muted{ color: var(--muted) !important; }
+
+    /* =====================  LISTS  ===================== */
+    .job-listing .checklist{ list-style: none !important; margin: .6em 0 .2em !important; padding:0 !important; }
+    .job-listing .checklist li{ padding-left: 1.75em !important; position: relative !important; }
+    .job-listing .checklist li:before{
+    content:"✔" !important; position:absolute !important; left:0 !important; top:0 !important;
+    line-height:1.2 !important; color: var(--brand) !important; font-weight: 700 !important;
+    }
+
+    /* =====================  LISTS  ===================== */
+    .job-listing .image {
+        position: relative !important;
+        overflow: hidden !important;
+        border: 1px solid var(--ring) !important;
+        border-radius: var(--radius) !important;
+        background: #000 !important;
+        aspect-ratio: 16 / 9 !important; 
+        margin-bottom: 20px; 
+    }
+    
+    /* ====== AUTO SLIDESHOW (CSS-only, no controls) ====== */
+    .job-listing .slideshow{
+    --interval: 4s;                    /* time per slide */
+    --count: 5;                        /* number of slides (update if you add/remove) */
+    --dur: calc(var(--count) * var(--interval));
+    position: relative !important;
+    padding-bottom: 20px;
+    }
+    .job-listing .slideshow .viewport{
+    position: relative !important;
+    overflow: hidden !important;
+    border: 1px solid var(--ring) !important;
+    border-radius: var(--radius) !important;
+    background: #000 !important;
+    aspect-ratio: 16 / 9 !important; 
+    }
+    .job-listing .slideshow .slide{
+    position: absolute !important; inset: 0 !important;
+    width: 100% !important; height: 100% !important;
+    opacity: 0;   
+    animation: jl-fade var(--dur) linear infinite !important;
+    }
+    .job-listing .slideshow .slide img{
+    width: 100% !important; height: 100% !important;
+    object-fit: cover !important;
+    }
+    .job-listing .slideshow .caption{
+    position:absolute !important; inset:auto 0 0 0 !important;
+    color:#fff !important;
+    background: linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55)) !important;
+    padding:.6rem .9rem !important; font-size:.95rem !important;
+    }
+    /* Stagger each slide by 1 interval (no controls needed) */
+    .job-listing .slideshow .slide:nth-child(1){ animation-delay: calc(0 * var(--interval)) !important; }
+    .job-listing .slideshow .slide:nth-child(2){ animation-delay: calc(1 * var(--interval)) !important; }
+    .job-listing .slideshow .slide:nth-child(3){ animation-delay: calc(2 * var(--interval)) !important; }
+    .job-listing .slideshow .slide:nth-child(4){ animation-delay: calc(3 * var(--interval)) !important; }
+    .job-listing .slideshow .slide:nth-child(5){ animation-delay: calc(4 * var(--interval)) !important; }
+    /* One slide is fully visible for ~3s, with quick crossfades */
+    @keyframes jl-fade{
+    /* quick fade in */
+    0%   { opacity: 0 }
+    2%   { opacity: 1 }
+    /* stay visible for most of the interval */
+    23%  { opacity: 1 }
+    /* quick fade out before the next slide starts */
+    25%  { opacity: 0 }
+    100% { opacity: 0 }
+    }
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+    .job-listing .slideshow .slide{ animation: none !important; opacity: 1 !important; }
+    .job-listing .slideshow .slide:not(:first-child){ display:none !important; }
+    }
+</style>
+<div class="job-listing">
+
+    <!-- ===================== HERO ===================== -->
+    <header class="hero">
+        <div class="container inner">
+            <span class="badge">We are hiring</span>
+            <h1>Principal Planner - Current Planning / Development Review</h1>
+            <p class="subtitle">Join our team and help guide DeLand’s growth from concept to completion.</p>
+        </div>
+    </header>
+
+    <!-- ===================== POSITION OVERVIEW ===================== -->
+    <section class="section">
+        <div class="container grid cols-1">
+            <div class="card">
+                <div class="kicker">Position Title</div>
+                <h2 class="h2">Principal Planner - Current Planning / Development Review</h2>
+                <p><strong>Annual Salary Range:</strong> $76,045 – $100,000</p>
+                <p class="lead">
+                    Step into a dynamic role as a Current Planning / Development Review Principal Planner with the City of DeLand, where you will serve as a collaborative lead working alongside senior planning staff to guide exciting development projects from concept to completion! This non-supervisory position puts you at the center of DeLand’s growth, where you will conduct comprehensive development reviews, lead site plan evaluations, and coordinate with developers, engineers, and community members to ensure projects align with the City’s vision and regulatory standards. This is the ideal opportunity for an experienced planning professional who enjoys fast-paced, detail-oriented work, thrives on problem-solving, and wants to play a crucial role in shaping the development of our unique community!
+                </p>
+            </div>
+            <div class="card">
+                <div class="kicker">Essential Duties & Responsibilities</div>
+                <ul class="checklist">
+                    <li>Manages the development review processes and current planning activities including platting, voluntary annexations, land use and zoning amendments.</li>
+                    <li>Coordinates the scheduling of the Technical Review Committee and weekly Pre-Application meetings.</li>
+                    <li>Serves as planning manager on highly complex current planning projects.</li>
+                    <li>Provides guidance on the development of planning proposals, including Comprehensive Plan amendments, Land Development Code amendments, zoning map and text amendments, annexation and development plan review requests.</li>
+                    <li>Works with other departments outside of Community Development to coordinate review and issuance of development permits.</li>
+                    <li>Coordinates the preparation, training, and implementation of new or revised policies, standards, and regulations.</li>
+                    <li>Attends City Commission, Planning Board, Technical Review Committee and other Community Development meetings.</li>
+                    <li>Coordinates the gathering of information, preparing of formal reports and oral presentations on departmental activities.</li>
+                    <li>Writes, reviews, and edits official documents.</li>
+                    <li>Acts as technical advisor to the Director and other department heads on planning matters.</li>
+                    <li>Takes a proactive approach to customer service issues.</li>
+                    <li>Makes process improvement changes to streamline procedures.</li>
+                    <li>Maintains confidentiality regarding sensitive information.</li>
+                    <li>Performs related duties as required.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== QUALIFICATIONS ===================== -->
+    <section class="section" style="background:var(--bg-alt)">
+        <div class="container grid cols-1">
+            <div class="card">
+                <div class="kicker">Qualification Requirements</div>
+                <p>To perform this job successfully, an individual must be able to perform each essential duty satisfactorily. The requirements listed below are representative of the knowledge, skills, and /or abilities required. Reasonable accommodations may be made to enable individuals with disabilities to perform the essential functions</p>
+            </div>
+            <div class="card">
+                <div class="kicker">Minimum Qualifications</div>
+                <h3 class="h3">Education & Experience</h3>
+                <ul>
+                    <li>Bachelor’s Degree from an accredited college or university in Urban Planning, or related field. A master’s degree is preferred.</li>
+                    <li>Six (6) years of progressively responsible professional experience in community development, planning, and/or redevelopment.</li>
+                    <li>AICP certification preferred.</li>
+                </ul>
+                <h3 class="h3">Language Skills</h3>
+                <p>The applicant must have the ability maintain effective working relationships with others, including County, State, and Federal agencies, civic groups and the public. The applicant must be able to clearly and effectively communicate both verbally and in writing. The applicant must also be able to communicate effectively with developers, team members, and citizens.</p>
+                <h3 class="h3">Reasoning Ability</h3>
+                <p>The applicant must have the ability to apply common sense understanding to carry out instructions furnished in written, oral, or diagram forms. Applicant must also be able to deal with problems involving several variables in standardized situations when immediate guidance from the supervisor may not be available.</p>
+            </div>
+            <div class="card">
+                <div class="kicker">Other Skills & Abilities</div>
+                <ul class="checklist">
+                    <li>Conducts public outreach and community meetings.</li>
+                    <li>Advanced knowledge of the principles and practices of planning and economic development.</li>
+                    <li>Advanced knowledge of the principles and practices of electronic permitting and GIS.</li>
+                    <li>Advanced knowledge of the principles and practices of creating affordable housing.</li>
+                    <li>Demonstrates ability to establish and maintain effective relationships with other City officials, employees and the general public.</li>
+                    <li>Demonstrates ability to present facts and recommendations effectively in oral and written/electronic form.</li>
+                    <li>Demonstrates ability to analyze facts and exercise sound judgment in arriving at conclusions.</li>
+                    <li>Conducts operations in a manner which displays tact, courtesy, thoroughness and dependability.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PROJECTS & BENEFITS ===================== -->
+    <section class="section">
+        <div class="container grid cols-1">
+            <div class="card">
+                <!-- <img class="image" src="https://services.deland.org/cdn/hr/job-listings/principal-planner/planner-image.jpg" alt="Anticipated Current Planning Projects"> -->
+                <video
+                    controls
+                    preload="metadata"
+                    playsinline
+                    poster="https://services.deland.org/cdn/hr/job-listings/principal-planner/planner-image.jpg"
+                    style="display:block; width:100% !important; height:auto !important; background:#000 !important; border-radius: var(--radius) !important; margin-bottom: 20px;"
+                    aria-label="Welcome to the City of DeLand">
+                    <source src="https://services.deland.org/cdn/hr/job-listings/about-deland/deland-area-drone.mp4" type="video/mp4" />
+                </video>
+                <div class="kicker">Anticipated Current Planning Projects</div>
+                <ul class="checklist">
+                    <li>Play a key role in a full update to the Land Development Regulations.</li>
+                    <li>Serve as project manager for large-scale complicated, and complex development applications for industrial, commercial, multi-family, and single-family developments that involve annexation, land use, and zoning amendments.</li>
+                    <li>Provide planning support for economic development initiatives.</li>
+                    <li>Participate in weekly pre-application meetings.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="kicker">Benefits</div>
+                <ul>
+                    <li><strong>Employer Provided Insurance:</strong> Medical, Long-Term Disability, and Basic Life Insurance.</li>
+                    <li><strong>Optional Insurance:</strong> Dental, Vision, Short-Term Disability, Supplemental Family Life Insurance, Supplemental Health Plans.</li>
+                    <li><strong>Leave/PTO:</strong> Sick, Vacation, Executive Comp, Personal Days (2), (11) Holidays.</li>
+                    <li>Front-loaded 40 hours sick leave at hire</li>
+                    <li>Ten days of vacation per year</li>
+                    <li>Executive comp time up to 80 hours</li>
+                    <li>City pays for professional associations and CEUs.</li>
+                    <li><strong>Retirement plans:</strong> Nationwide Retirement 401A - 5% employee pay, 7.5% city match Supplemental 457 - employee cost</li>
+                    <li>Wellness center, gym, clinic, etc. specifically for employees.</li>
+                    <li>City Employee (and insured dependents) access to city’s Health Clinic at no cost</li>
+                    <li>6 weeks paid maternity/paternity leave after 1 year of employment.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT DELAND ===================== -->
+    <section class="section" style="background:var(--bg-alt)">
+        <div class="container grid cols-1">
+            <div class="card">
+                <!-- ===================== IMAGE SLIDESHOW ===================== -->
+                <div class="slideshow" aria-label="City of DeLand photo slideshow">
+                    <div class="viewport">
+                        <figure class="slide">
+                            <img src="https://services.deland.org/cdn/hr/job-listings/about-deland/deland-drone.jpg"
+                                alt="DeLand City Hall at dusk">
+                            <figcaption class="caption">Downtown DeLand</figcaption>
+                        </figure>
+                        <figure class="slide">
+                            <img src="https://services.deland.org/cdn/hr/job-listings/about-deland/spec-martin-drone.jpg"
+                                alt="Community event in downtown DeLand">
+                            <figcaption class="caption">Spec Martin</figcaption>
+                        </figure>
+                        <figure class="slide">
+                            <img src="https://services.deland.org/cdn/hr/job-listings/about-deland/fire-drone.jpg"
+                                alt="Lakefront park and trails">
+                            <figcaption class="caption">DeLand Fire Department</figcaption>
+                        </figure>
+                        <figure class="slide">
+                            <img src="https://services.deland.org/cdn/hr/job-listings/about-deland/earl-brown park.jpg"
+                                alt="Modern civic facility exterior">
+                            <figcaption class="caption">Earl Brown Park</figcaption>
+                        </figure>
+                        <figure class="slide">
+                            <img src="https://services.deland.org/cdn/hr/job-listings/about-deland/deland-bike-week.jpg"
+                                alt="Modern civic facility exterior">
+                            <figcaption class="caption">Bike Week in downtown DeLand</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <div class="kicker">About DeLand</div>
+                <p>Situated between Daytona Beach and Orlando, DeLand is a cultural hub with a rich history. Founded by visionary businessman, Henry A. DeLand in 1876, his aim was to make our city a cultural center known as a the “Athens of Florida.</p>
+                <p>Today our community continues to thrive, with a strong sense of community and a commitment to preserving our history. The city’s award-winning historic downtown district is a popular destination, featuring shops, restaurants and special events.</p>
+                <h3 class="h3">Notable Events</h3>
+                <p>Just about every weekend, there is something going on in DeLand. Some of our notable events include:</p>
+                <ul>
+                    <li>Mardi Gras Dog Parade</li>
+                    <li>MeStrong 5K</li>
+                    <li>Wildflower & Garden Festival</li>
+                    <li>Firecracker Festival</li>
+                    <li>DeLand High School Homecoming Parade</li>
+                    <li>Fall Festival of the Arts</li>
+                    <li>Annual DeLand Christmas Parade</li>
+                </ul>
+                <p>As the county seat for Volusia County, DeLand is home to Skydive DeLand, helping make the city the “Skydive Capital of the World.” We are also home to Stetson University, Athens Theatre and several museums.</p>
+                <h3 class="h3">Nearby Natural Beauty</h3>
+                <p>There is also a lot of natural beauty near our city including:</p>
+                <ul>
+                    <li>Hontoon Island State Park</li>
+                    <li>DeLeon Springs State Park</li>
+                    <li>Lake Woodruff Wildlife Refuge</li>
+                    <li>Blue Spring State Park</li>
+                </ul>
+                <p class="muted">~45 minutes to Orlando, ~90 minutes to Cape Canaveral & St. Augustine, ~30 minutes to Atlantic beaches.</p>
+            </div>
+            <div class="card">
+                <div class="kicker">About the City of DeLand Government</div>
+                <p>DeLand operates under a commission-manager form of government, which means the commission appoints a professional City Manager to serve as Chief Executive Officer. The City Commission includes a Mayor and four City Commissioners, all elected by voters at-large. They serve four-year terms that overlap to ensure continuity, and there are no term limits. The Mayor leads Commission meetings and represents the city at official events, while the Commission makes decisions about city policies and services, such as economic growth, planning, public safety, parks, utilities, and managing the airport. They also set the city's budget and tax rates.</p>
+                <p>The City Commission hires three key officials to help manage city operations: the City Manager, the City Attorney, and the City Clerk. DeLand is known for its stable leadership. For example, recent Mayors have served over 20 years, and the city has had just two City Managers in the last 25 years. The current City Manager, Michael Pleus, has been in his role for 16 years and worked as the Assistant City Manager for eight years before that. Many department leaders and staff members have been with the city for decades, with some employees working 35 to 40 years.+</p>
+                <p>The City of DeLand employs more than 500 full-time staff and has a budget of approximately $131 million for the 2025 fiscal year. This is funded partly by property taxes, with a rate of 6.3841 mills about $6.38 per $1,000 of taxable property value). The city has low debt and healthy savings, thanks to ongoing efforts to keep costs down.*</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== APPLICATION PROCESS ===================== -->
+    <section class="section">
+        <div class="container grid cols-1">
+            <div class="card">
+                <div>
+                    <div class="kicker">Application Process</div>
+                    <p><strong>First review of applications:</strong> October 3, 2025.</p>
+                    <p>For more information on this position:</p>
+                    <p><strong>Jeremy Wiggins, Human Resources Director</strong><br>
+                        <a href="mailto:wigginsj@deland.org">wigginsj@deland.org</a><br>
+                        <a href="tel:13866267096">386-626-7096</a>
+                    </p>
+                    <p class="muted">The City of DeLand is an Equal Opportunity Employer and values diversity in its workforce. Applicants selected as finalists for this position will be subject to a comprehensive background check. Veteran’s Preference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
